@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Para Sofi ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(180deg, #cdb4db, #ffc8dd, #bde0fe);
+  font-family: 'Press Start 2P', cursive;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.pantalla {
+  background: #fff;
+  border: 6px solid #ffafcc;
+  border-radius: 24px;
+  width: 90%;
+  max-width: 420px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(255,175,204,0.6);
+}
+
+.titulo {
+  color: #ff5d8f;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.texto {
+  font-size: 11px;
+  line-height: 1.8;
+  min-height: 120px;
+}
+
+.boton {
+  margin-top: 20px;
+  padding: 14px;
+  background: #a2d2ff;
+  border-radius: 14px;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.juego {
+  display: none;
+}
+
+.player {
+  font-size: 30px;
+  margin: 20px 0;
+}
+
+.barra {
+  height: 12px;
+  background: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 15px;
+}
+
+.progreso {
+  height: 100%;
+  width: 0%;
+  background: #ffafcc;
+  transition: width 0.4s;
+}
+
+/* Corazones */
+.heart {
+  position: absolute;
+  font-size: 18px;
+  animation: subir 6s linear forwards;
+  pointer-events: none;
+}
+
+@keyframes subir {
+  from { transform: translateY(100vh); opacity: 0; }
+  10% { opacity: 1; }
+  to { transform: translateY(-10vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="pantalla" id="inicio">
+  <div class="titulo">🎮 PARA SOFI ❤️</div>
+  <div class="texto">
+    Bienvenida a un juego especial.<br><br>
+    ¿Lista para comenzar?
+  </div>
+  <div class="boton" onclick="startGame()">▶ START</div>
+</div>
+
+<div class="pantalla juego" id="nivel1">
+  <div class="titulo">NIVEL 1</div>
+  <div class="texto">
+    Avanza para desbloquear<br>
+    el mensaje especial 💖
+  </div>
+
+  <div class="player">🧍‍♂️➡️❤️</div>
+
+  <div class="barra">
+    <div class="progreso" id="progreso"></div>
+  </div>
+
+  <div class="boton" onclick="avanzar()">▶ AVANZAR</div>
+</div>
+
+<div class="pantalla juego" id="final">
+  <div class="titulo">💖 NIVEL COMPLETADO 💖</div>
+  <div class="texto">
+    No podemos estar juntos el 14,<br><br>
+    pero quiero toda una vida<br>
+    contigo 💘
+  </div>
+</div>
+
+<script>
+let progreso = 0;
+
+function startGame() {
+  document.getElementById("inicio").style.display = "none";
+  document.getElementById("nivel1").style.display = "block";
+}
+
+function avanzar() {
+  progreso += 25;
+  document.getElementById("progreso").style.width = progreso + "%";
+
+  crearCorazones();
+
+  if (progreso >= 100) {
+    document.getElementById("nivel1").style.display = "none";
+    document.getElementById("final").style.display = "block";
+    lluviaFinal();
+  }
+}
+
+function crearCorazones() {
+  for (let i = 0; i < 5; i++) {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.style.left = Math.random() * 100 + "vw";
+    h.innerHTML = ["❤️","💖","💕","💗"][Math.floor(Math.random()*4)];
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 6000);
+  }
+}
+
+function lluviaFinal() {
+  let count = 0;
+  const lluvia = setInterval(() => {
+    crearCorazones();
+    count++;
+    if (count > 10) clearInterval(lluvia);
+  }, 300);
+}
+</script>
+
+</body>
+</html>
